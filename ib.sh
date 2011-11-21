@@ -5,6 +5,7 @@
 . functions.sh
 
 http_header "Content-Type" "text/html"
+http_header "X-Powered-By" "IB"
 
 # Stuff goes here.
 # 

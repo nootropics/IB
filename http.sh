@@ -1,6 +1,5 @@
 http_header() {
-	http_headers=( ["$1"]="$2")
-	
+	http_headers["$1"]="$2"
 }
 
 # print HTTP headers; start sending content.
