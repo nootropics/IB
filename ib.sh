@@ -1,5 +1,5 @@
 . http.sh
-. functions.php
+. functions.sh
 
 # Stuff goes here.
 # 
