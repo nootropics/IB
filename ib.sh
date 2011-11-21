@@ -1,3 +1,6 @@
+#!/bin/bash
+
+# Includes
 . http.sh
 . functions.sh
 
