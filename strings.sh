@@ -1,5 +1,4 @@
 make_name_tripcode() {
-	# TODO: Make the regex thingy
 	name=$1
 	securesalt="fatfuck"
 	
@@ -40,8 +39,7 @@ make_name_tripcode() {
 		echo -n "!$tripcode"
 	fi
 	
-	# FIXME: This seems broken
-	if [ "$secure" != "" ]; then		
+	if [ "$secure" != "" ]; then
 		secure=$(echo -n "${secure}${securesalt}" | openssl sha1 -binary | base64 | cut -b 1-10)
 		
 		echo -n "!!$secure"
@@ -51,4 +49,4 @@ make_name_tripcode() {
 	echo
 }
 
-make_name_tripcode $1
+
