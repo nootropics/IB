@@ -1,6 +1,5 @@
 make_name_tripcode() {
 	name=$1
-	securesalt="fatfuck"
 	
 	# parse tripcode
 	if [[ ! "$name" =~ ^([^#]+)#(.+)$ ]]; then
@@ -13,10 +12,10 @@ make_name_tripcode() {
 	name="${BASH_REMATCH[1]}"
 	tripcode="${BASH_REMATCH[2]}"
 	
-	if [[ "$tripcode" =~ ^(.+?)?##(.+)?$ ]]; then
+	if [[ "$tripcode" =~ ^((.+?)##|#)(.+)?$ ]]; then
 		# secure tripcode
-		tripcode="${BASH_REMATCH[1]}"
-		secure="${BASH_REMATCH[2]}"
+		tripcode="${BASH_REMATCH[2]}"
+		secure="${BASH_REMATCH[3]}"
 	else
 		# standard tripcode
 		secure=""
@@ -40,7 +39,7 @@ make_name_tripcode() {
 	fi
 	
 	if [ "$secure" != "" ]; then
-		secure=$(echo -n "${secure}${securesalt}" | openssl sha1 -binary | base64 | cut -b 1-10)
+		secure=$(echo -n "${secure}${CONFIG["securesalt"]}" | openssl sha1 -binary | base64 | cut -b 1-10)
 		
 		echo -n "!!$secure"
 	fi
