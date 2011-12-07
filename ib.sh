@@ -4,7 +4,7 @@
 . http.sh
 . functions.sh
 
-http_header "Content-Type" "text/html"
+http_header "Content-Type" "text/html; charset=utf-8"
 http_header "X-Powered-By" "IB"
 
 # Stuff goes here.

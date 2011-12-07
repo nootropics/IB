@@ -1,9 +1,29 @@
 make_name_tripcode() {
 	# TODO: Make the regex thingy
-	name="Name"
-	tripcode="faggot"
-	secure="niggers1"
-	salt="fatfuck"
+	name=$1
+	securesalt="fatfuck"
+	
+	# parse tripcode
+	if [[ ! "$name" =~ ^([^#]+)#(.+)$ ]]; then
+		# no tripcode supplied; return with just name
+		echo $name
+		return 0
+	fi
+	
+	# extract name
+	name="${BASH_REMATCH[1]}"
+	tripcode="${BASH_REMATCH[2]}"
+	
+	if [[ "$tripcode" =~ ^(.+?)?##(.+)?$ ]]; then
+		# secure tripcode
+		tripcode="${BASH_REMATCH[1]}"
+		secure="${BASH_REMATCH[2]}"
+	else
+		# standard tripcode
+		secure=""
+	fi
+	
+	echo -n $name
 
 	if [ "$tripcode" != "" ]; then
 		tripcode=$(echo $tripcode | iconv -f utf8 -t shift_jis)
@@ -16,20 +36,19 @@ make_name_tripcode() {
 		# TODO: Add mcrypt support
 		tripcode=$(perl -e 'print crypt($ARGV[0], $ARGV[1])' $tripcode $salt)
 		tripcode=$(echo -n $tripcode | tail -c 10)
+		
+		echo -n "!$tripcode"
 	fi
-
 	
 	# FIXME: This seems broken
-	if [ "$secure" != "" ]; then
-		secure=$(echo -n "${secure}${salt}" | sha1sum | xxd -p | tr -d '\n')
-		secure=$(echo -n $secure | base64)
-		secure=$(echo -n $secure | cut -b 1-10)
+	if [ "$secure" != "" ]; then		
+		secure=$(echo -n "${secure}${securesalt}" | openssl sha1 -binary | base64 | cut -b 1-10)
+		
+		echo -n "!!$secure"
 	fi
 	
-	echo "!$tripcode"
-	echo "!!$secure"
-	#name=$salt
-	#tripcode=$tripcode
+	# end with a new line
+	echo
 }
 
-make_name_tripcode
+make_name_tripcode $1
