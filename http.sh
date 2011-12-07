@@ -4,7 +4,7 @@ http_header() {
 
 # print HTTP headers; start sending content.
 http_headers() {
-	echo "HTTP/1.1 $1 $2"
+	echo "Status: $1 $2"
 	
 	for header in "${!http_headers[@]}"; do
 		echo "$header: ${http_headers[$header]}"
