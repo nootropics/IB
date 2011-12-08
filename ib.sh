@@ -18,12 +18,6 @@ cd $(dirname "$scriptname")
 http_header "Content-Type" "text/plain; charset=utf-8"
 http_header "X-Powered-By" "IB"
 
-# Stuff goes here.
-# 
-# ...
-
-declare -A row
-
 case $REQUEST_URI in
 	"/" )
 		http_header "Content-Type" "text/html; charset=utf-8"
