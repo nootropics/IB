@@ -13,9 +13,7 @@ fetch_rows() {
 		arr_name="row"
 	fi
 	
-	#local row=''
-	#declare -A row
-	typeset -A row
+	declare -A row
 	
 	continue=1
 	query "$1" | while [ $continue == 1 ]; do
